@@ -1,0 +1,7 @@
+version: '3'
+services:
+  mysshd:
+    image: calife/test:mysshd
+    ports:
+     - "2222:22"   
+

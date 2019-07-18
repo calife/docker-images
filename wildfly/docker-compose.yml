@@ -1,0 +1,25 @@
+version: '3'
+services:
+  wildfly:
+    image: calife/test:wildfly
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      # resources:
+      #   limits:
+      #     cpus: "0.1"
+      #     memory: 50M        
+    ports:
+      - "80:8080"
+      - "443:8443"
+      - "9990:9990"
+      - "9999:9999"
+    networks:
+      - webnet      
+    # volumes:
+    #   - .:/opt/
+    environment:
+      FLASK_ENV: development
+networks:
+  webnet:

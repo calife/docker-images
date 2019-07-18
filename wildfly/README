@@ -1,0 +1,55 @@
+
+# Build image
+
+docker build --rm -t wildfly .
+
+# Run the container
+
+docker run -p80:8080 -p9990:9990 -p9999:9999 -p 443:8443 wildfly
+
+# Log in into container 
+
+docker exec -u0 -it `docker ps -q` /bin/bash
+
+# Tag and push docker image to registry
+
+docker tag wildfly:latest calife/test:wildfly
+
+docker push calife/test:wildfly
+
+
+docker-compose up
+docker-compose ps
+docker-compose exec wildfly whoami
+docker-compose down --volumes
+
+
+docker swarm init
+
+# Docker performs an in-place update, no need to tear the stack down first or kill any containers.
+docker stack deploy -c docker-compose.yml lab
+docker ps
+docker service ls
+docker stack rm lab
+docker swarm leave -f
+
+
+
+
+ docker-machine create vm1
+ docker-machine create vm2
+ docker-machine ls
+ docker login
+ docker-machine ssh vm1 "docker swarm init --advertise-addr 192.168.99.100"
+ docker-machine ssh vm2 "docker swarm join --token SWMTKN-1-1eqswwviu1r70uzm6rnxw6nfilrbh83bmospbts2271w9bi9kk-0biazzqb9dyn1a3mvfk0x86fh 192.168.99.100:2377 --with-registry-auth "
+ docker-machine ssh vm1 docker node ls
+
+# configure local shell to run docker command on node vm1
+ docker-machine env vm1
+ eval $(docker-machine env vm1)
+
+# Run on monitor node
+docker stack deploy -c docker-compose.yml --with-registry-auth lab
+
+docker stack ps lab
+
