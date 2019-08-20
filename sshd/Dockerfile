@@ -5,15 +5,15 @@ RUN mkdir /var/run/sshd
 
 RUN mkdir /root/.ssh/
 
-RUN apt-get update && apt-get install -y openssh-server 
+RUN apt-get update && apt-get install -y openssh-server supervisor
 
-WORKDIR /app
-
-COPY create-pwd.sh ./create-pwd.sh
-
-RUN chmod a+x ./create-pwd.sh
-
-RUN ./create-pwd.sh
+# WORKDIR /app
+# COPY create-pwd.sh ./create-pwd.sh
+# RUN chmod a+x ./create-pwd.sh
+# RUN ./create-pwd.sh
+# RUN (cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)>/tmp/one
+# RUN cat /tmp/one
+# RUN echo "root:$P" | chpasswd
 
 RUN echo "root:aaa" | chpasswd
 

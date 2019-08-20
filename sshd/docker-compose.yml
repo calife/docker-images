@@ -2,6 +2,11 @@ version: '3'
 services:
   mysshd:
     image: calife/test:mysshd
+    deploy:
+      replicas: 2
     ports:
-     - "2222:22"   
-
+     - "2222:22" 
+    networks:
+      - sshnet
+networks:
+  sshnet:

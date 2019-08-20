@@ -1,0 +1,8 @@
+version: "3"
+services:
+  dataservice:
+    image: calife/java-service:version1
+    deploy:
+      replicas: 3
+    ports:
+      - "80:9080"

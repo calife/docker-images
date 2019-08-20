@@ -1,0 +1,18 @@
+#!/usr/bin/expect -f
+
+#Usage ssh.exp <host> <ssh user> <ssh port> <ssh password>
+
+set timeout 5
+
+spawn ssh  -o "StrictHostKeyChecking no" [lindex $argv 1]@[lindex $argv 0] -p [lindex $argv 2]
+
+expect "*?assword" {
+	send "[lindex $argv 3]\r"
+}
+
+expect "[lindex $argv 1]@*" {
+	send -- "exit\r"
+}
+
+expect timeout  { puts "timed out during login"; exit 1 }
+
